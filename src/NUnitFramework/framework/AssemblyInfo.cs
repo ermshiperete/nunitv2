@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Security;
 
 [assembly: CLSCompliant(true)]
+#if !NET_4_0
 [assembly: AllowPartiallyTrustedCallers]
+#endif
 
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("../../nunit.snk")]
