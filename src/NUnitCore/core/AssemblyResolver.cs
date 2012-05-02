@@ -96,23 +96,25 @@ namespace NUnit.Core
 				foreach( string file in Directory.GetFiles( dir, "*.dll" ) )
 				{
 					string fullFile = Path.Combine( dir, file );
-                    AssemblyReader rdr = new AssemblyReader(fullFile);
-					try
+					using (AssemblyReader rdr = new AssemblyReader(fullFile))
 					{
-                        if (rdr.IsDotNetFile)
-                        {
-                            if (AssemblyName.GetAssemblyName(fullFile).FullName == fullName)
-                            {
-                                log.Info(string.Format("Added to Cache: {0}", fullFile));
-                                AddFile(fullFile);
-                                return _cache.Resolve(fullName);
-                            }
-                        }
-					}
-					catch(Exception ex)
-					{
-                        log.Error( "Unable to load addin assembly", ex );
-                        throw;
+						try
+						{
+		                    if (rdr.IsDotNetFile)
+		                    {
+		                        if (AssemblyName.GetAssemblyName(fullFile).FullName == fullName)
+		                        {
+		                            log.Info(string.Format("Added to Cache: {0}", fullFile));
+		                            AddFile(fullFile);
+		                            return _cache.Resolve(fullName);
+		                        }
+		                    }
+						}
+						catch(Exception ex)
+						{
+		                    log.Error( "Unable to load addin assembly", ex );
+		                    throw;
+						}
 					}
 				}
 			}
